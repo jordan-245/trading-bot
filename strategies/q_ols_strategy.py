@@ -13,10 +13,10 @@ class Q_OLSStrategy(BaseStrategy):
         self.lma_long = config.get("lma_long", 100)
         self.vol_ma_window = config.get("vol_ma_window", 10)
         self.sma_col_name = f"SMA_{self.sma_period}"
-        self.__prepare_data()
-        self.__apply_ols_model()
+        self.prepare_data()
+        self.apply_ols_model()
 
-    def __prepare_data(self):
+    def prepare_data(self):
         # Calculate average price and SMA used for regression
         self.data['Avg'] = (self.data['Open'] + self.data['High'] +
                             self.data['Low'] + self.data['Close']) / 4
@@ -35,7 +35,7 @@ class Q_OLSStrategy(BaseStrategy):
         self.data['Lower_boll'] = self.data['SMA_boll'] - boll_multiplier * self.data['STD_boll']
         self.data.dropna(inplace=True)
 
-    def __apply_ols_model(self):
+    def apply_ols_model(self):
         X = self.data[[self.sma_col_name]]
         y = self.data['Avg']
         model = LinearRegression()

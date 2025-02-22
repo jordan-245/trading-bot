@@ -57,11 +57,13 @@ def place_conditional_exit_orders(signal, symbol, entry_price, sma_value, boll_v
         timeInForce="GTC",
         price=str(round(sma_value, tp_precision)),
         triggerPrice=str(round(sma_value, tp_precision)),
-        reduceOnly="true",
+        triggerDirection=2 if signal == "Long" else 1,  # Added triggerDirection
+        reduceOnly="true",        
         orderFilter="StopOrder",
         isLeverage=1,
         positionIdx=1 if signal=="Long" else 2
     )
+
     print("Placed conditional exit order at SMA:")
     print(cond_response)
 
@@ -75,6 +77,7 @@ def place_conditional_exit_orders(signal, symbol, entry_price, sma_value, boll_v
         trailing_distance = round(entry_price - sma_value, tp_precision)
         take_profit_price = round(boll_value, tp_precision)
         stop_loss_price = round(entry_price, tp_precision)
+        print(f"Trailing distance: {trailing_distance}, Take profit price: {take_profit_price}, Stop loss price: {stop_loss_price}")
         positionIdx = 2
 
     trail_response = set_trading_stop(

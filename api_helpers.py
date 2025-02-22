@@ -27,6 +27,7 @@ def create_bybit_order(category, symbol, side, orderType, qty, timeInForce, **kw
         "timestamp": str(int(float(server_time) * 1000))
     }
     params.update(kwargs)
+    print(params)
     params["sign"] = get_signature(params)
     headers = {"Content-Type": "application/json"}
     r = requests.post(url, json=params, headers=headers)

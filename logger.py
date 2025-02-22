@@ -4,7 +4,7 @@ from psycopg2.extras import Json
 def log_trade(trade_time, signal, side, symbol, order_type, quantity,
               order_price, take_profit, stop_loss, response):
     try:
-        conn = psycopg2.connect("postgresql://user:password@host/db?sslmode=require")
+        conn = psycopg2.connect("postgresql://stock_analysis_owner:npg_e5cj0MXkbOUz@ep-sparkling-wave-a8khgq87-pooler.eastus2.azure.neon.tech/stock_analysis?sslmode=require")
         cur = conn.cursor()
         query = """
             INSERT INTO trading_logs 
